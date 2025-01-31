@@ -1,41 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConectaServ - Serviços</title>
-    <link rel="stylesheet" href="services.css">
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Serviços - ConectaServ</title>
+   <link rel="stylesheet" href="services.css">
 </head>
 <body>
-    <header class="main-header">
-        <div class="nav-container">
-            <div class="logo">ConectaServ</div>
-            <div class="nav-links">
-                <a href="index.html">Início</a>
-                <a href="services.html">Serviços</a>
-                <a href="register.html">Cadastre-se</a>
-                <a href="login.html">Login</a>
-            </div>
-        </div>
-    </header>
+   <header class="main-header">
+       <nav class="nav-container">
+           <a href="index.html" class="logo">ConectaServ</a>
+           <div class="nav-links">
+               <a href="index.html">Início</a>
+               <a href="servicos.html">Serviços</a>
+               <a href="cadastroProfissional.html">Seja um Prestador</a>
+               <a href="login.html">Cadastre-se/Login</a>
+           </div>
+       </nav>
+   </header>
 
-    <main class="services-container">
-        <div class="search-section">
-            <div class="search-bar">
-                <input type="text" placeholder="Buscar serviços...">
-                <button class="search-btn">Buscar</button>
-            </div>
-            <div class="filters">
-                <button class="filter-btn active">Todos</button>
-                <button class="filter-btn">Eletricistas</button>
-                <button class="filter-btn">Encanadores</button>
-                <button class="filter-btn">Pintores</button>
-                <button class="filter-btn">Diaristas</button>
-            </div>
-        </div>
-        <div id="searchResults"></div>
-    </main>
+   <main class="services-container">
+       <section class="search-section">
+           <div class="search-bar">
+               <input type="text" placeholder="Buscar serviços...">
+               <button class="search-btn">Buscar</button>
+           </div>
+           <div class="filters">
+               <button class="filter-btn active">Todos</button>
+               <button class="filter-btn">Eletricista</button>
+               <button class="filter-btn">Encanador</button>
+               <button class="filter-btn">Pintor</button>
+               <button class="filter-btn">Jardineiro</button>
+               <button class="filter-btn">Marceneiro</button>
+           </div>
+       </section>
 
-    <script src="js/services.js"></script>
+       <section class="search-results">
+           <!-- Prestadores serão listados aqui via JavaScript -->
+       </section>
+   </main>
+
+   <script src="js/services.js"></script>
 </body>
 </html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Profissional - ConectaServ</title>
+    <link rel="stylesheet" href="perfil.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">ConectaServ</a>
+        <div class="nav-links">
+            <a href="index.html">Início</a>
+            <a href="servicos.html">Serviços</a>
+            <a href="cadastroProfissional.html">Seja um Prestador</a>
+            <a href="login.html">Cadastre-se/Login</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-info">
+                <h1 id="nome-prestador">Nome do Prestador</h1>
+                <p id="categoria-prestador">Categoria</p>
+                <div class="avaliacao">
+                    <span class="stars">★★★★★</span>
+                    <span id="numero-avaliacoes">(0 avaliações)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-section">
+                <h2>Informações de Contato</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Email:</label>
+                        <p id="email-prestador">email@exemplo.com</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Telefone:</label>
+                        <p id="telefone-prestador">(00) 00000-0000</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2>Sobre o Serviço</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Preço por Hora:</label>
+                        <p id="preco-hora">R$ 0,00</p>
+                    </div>
+                    <div class="info-item full-width">
+                        <label>Descrição:</label>
+                        <p id="descricao-servico">Descrição do serviço...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2>Horários Disponíveis</h2>
+                <div id="horarios-container" class="horarios-grid">
+                    <!-- Horários serão inseridos aqui via JavaScript -->
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <h2>Avaliações</h2>
+                <div id="avaliacoes-container">
+                    <!-- Avaliações serão inseridas aqui via JavaScript -->
+                    <p class="no-reviews">Ainda não há avaliações.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+        <button id="btn-editar" class="btn-primary" onclick="window.location.href='editarPerfil.html'">Editar Perfil</button>
+        <button id="btn-sair" class="btn-secondary">Sair</button>
+        </div>
+    </div>
+
+    <script src="js/perfil.js"></script>
+</body>
+</html>
