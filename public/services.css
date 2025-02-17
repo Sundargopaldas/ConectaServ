@@ -187,31 +187,10 @@ body {
 }
 
 /* Responsividade */
-@media (max-width: 768px) {
-   .main-header {
-       padding: 15px 4%;
-   }
 
-   .services-container {
-       padding: 20px 4%;
-   }
+   
 
-   .nav-links {
-       gap: 15px;
-   }
-
-   .search-bar {
-       flex-direction: column;
-   }
-
-   .search-btn {
-       width: 100%;
-   }
-
-   .filters {
-       justify-content: center;
-   }
-}
+   
 
 @media (max-width: 480px) {
    .service-info {
@@ -222,4 +201,49 @@ body {
    .contact-btn {
        width: 100%;
    }
+}
+/* Tablet (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .filters {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .filter-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}
+
+/* Mobile (< 768px) */
+@media screen and (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+
+    .service-card {
+        margin-bottom: 15px;
+    }
+
+    .nav-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links a {
+        padding: 10px 0;
+    }
 }

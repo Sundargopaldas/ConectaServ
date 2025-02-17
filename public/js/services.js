@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function() {
     let prestadores = [];
-    const searchInput = document.querySelector('.search-bar input');
     const filterButtons = document.querySelectorAll('.filter-btn');
 
     // Carregar prestadores
@@ -11,17 +10,6 @@ document.addEventListener('DOMContentLoaded', async function() {
     } catch (error) {
         console.error('Erro:', error);
     }
-
-    // Busca
-    document.querySelector('.search-btn').addEventListener('click', () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        const filtered = prestadores.filter(p => 
-            p.nome.toLowerCase().includes(searchTerm) ||
-            p.categoria.toLowerCase().includes(searchTerm) ||
-            p.descricao.toLowerCase().includes(searchTerm)
-        );
-        displayPrestadores(filtered);
-    });
 
     // Filtros por categoria
     filterButtons.forEach(btn => {

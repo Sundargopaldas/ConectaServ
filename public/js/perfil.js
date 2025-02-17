@@ -1,103 +1,226 @@
-document.addEventListener('DOMContentLoaded', async function() {
-    // Função para carregar os dados do prestador
-    async function carregarPerfil() {
-        try {
-            const response = await fetch('http://localhost:3001/api/perfil');
-            if (!response.ok) {
-                throw new Error('Erro ao carregar perfil');
-            }
-            const data = await response.json();
-            preencherDados(data);
-        } catch (error) {
-            console.error('Erro:', error);
-            alert('Erro ao carregar dados do perfil');
+async function carregarDadosPrestador() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const prestadorId = urlParams.get('id');
+        
+        console.log('Tentando carregar prestador:', prestadorId);
+
+        const response = await fetch(`/api/perfil/${prestadorId}`);
+        const prestador = await response.json();
+        
+        console.log('Dados recebidos:', prestador);
+
+        // Preenchendo campos básicos
+        document.getElementById('nome-prestador').textContent = prestador.nome || 'Nome não disponível';
+        document.getElementById('telefone-prestador').textContent = prestador.telefone || 'Telefone não disponível';
+        
+        // Tratamento correto para preço
+        const preco = Number(prestador.preco_hora);
+        document.getElementById('preco-hora').textContent = `R$ ${!isNaN(preco) ? preco.toFixed(2) : '0,00'}`;
+        
+        document.getElementById('email-prestador').textContent = prestador.email || 'Email não disponível';
+        document.getElementById('descricao-servico').textContent = prestador.descricao || 'Sem descrição disponível';
+
+        // Tratamento para média de avaliações
+        const mediaElement = document.getElementById('media-avaliacoes');
+        if (mediaElement) {
+            const media = Number(prestador.media_geral);
+            mediaElement.textContent = !isNaN(media) ? media.toFixed(1) : '0.0';
         }
+
+        // Número de avaliações
+        const numeroAvaliacoesElement = document.getElementById('numero-avaliacoes');
+        if (numeroAvaliacoesElement) {
+            const total = Number(prestador.total_avaliacoes) || 0;
+            numeroAvaliacoesElement.textContent = `(${total} avaliações)`;
+        }
+        
+    } catch (error) {
+        console.error('Erro ao carregar dados do prestador:', error);
+        // Tratamento de erro
+        document.getElementById('nome-prestador').textContent = 'Nome não disponível';
+        document.getElementById('telefone-prestador').textContent = 'Telefone não disponível';
+        document.getElementById('preco-hora').textContent = 'R$ 0,00';
+        document.getElementById('email-prestador').textContent = 'Email não disponível';
+        document.getElementById('descricao-servico').textContent = 'Sem descrição disponível';
+        document.getElementById('media-avaliacoes').textContent = '0.0';
+        document.getElementById('numero-avaliacoes').textContent = '(0 avaliações)';
     }
+}
+async function carregarAvaliacoes() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const professionalId = urlParams.get('id');
+        
+        console.log('Carregando avaliações para prestador:', professionalId);
 
-    // Função para preencher os dados na página
-    function preencherDados(data) {
-        // Informações básicas
-        document.getElementById('nome-prestador').textContent = data.nome;
-        document.getElementById('categoria-prestador').textContent = data.categoria;
-        document.getElementById('email-prestador').textContent = data.email;
-        document.getElementById('telefone-prestador').textContent = formatarTelefone(data.telefone);
-        document.getElementById('preco-hora').textContent = formatarPreco(data.preco_hora);
-        document.getElementById('descricao-servico').textContent = data.descricao;
+        const response = await fetch(`/api/reviews?professionalId=${professionalId}`);
+        const avaliacoes = await response.json();
+        
+        console.log('Avaliações recebidas:', avaliacoes);
 
-        // Preencher horários
-        const horariosContainer = document.getElementById('horarios-container');
-        horariosContainer.innerHTML = ''; // Limpa horários existentes
+        const container = document.getElementById('avaliacoes-container');
+        
+        if (!avaliacoes.length) {
+            container.innerHTML = '<p class="no-reviews">Ainda não há avaliações.</p>';
+            return;
+        }
 
-        data.horarios.forEach(horario => {
-            const horarioElement = document.createElement('div');
-            horarioElement.className = 'horario-card';
-            horarioElement.innerHTML = `
-                <h3>${formatarDiaSemana(horario.dia_semana)}</h3>
-                <p>${horario.hora_inicio} - ${horario.hora_fim}</p>
-            `;
-            horariosContainer.appendChild(horarioElement);
+        // Calcular médias
+        const mediaGeral = avaliacoes.reduce((acc, av) => acc + av.general_rating, 0) / avaliacoes.length;
+        const mediaPontualidade = avaliacoes.reduce((acc, av) => acc + av.punctuality_rating, 0) / avaliacoes.length;
+        const mediaQualidade = avaliacoes.reduce((acc, av) => acc + av.quality_rating, 0) / avaliacoes.length;
+
+        // Atualizar médias no topo
+        document.getElementById('media-avaliacoes').textContent = mediaGeral.toFixed(1);
+        document.getElementById('numero-avaliacoes').textContent = `(${avaliacoes.length} avaliações)`;
+
+        // Mostrar cada avaliação
+        container.innerHTML = avaliacoes.map(avaliacao => `
+    <div class="avaliacao-card">
+        <div class="avaliacao-header">
+            <div class="avaliador-info">
+                <h3>Avaliado por: ${avaliacao.cliente_nome}</h3>
+                <div class="avaliacao-data">${new Date(avaliacao.created_at).toLocaleDateString()}</div>
+            </div>
+            <div class="avaliacao-detalhes">
+                <div class="avaliacao-item">
+                    <span>Geral:</span>
+                    <div class="stars">${'★'.repeat(avaliacao.general_rating)}${'☆'.repeat(5-avaliacao.general_rating)}</div>
+                </div>
+                <div class="avaliacao-item">
+                    <span>Pontualidade:</span>
+                    <div class="stars">${'★'.repeat(avaliacao.punctuality_rating)}${'☆'.repeat(5-avaliacao.punctuality_rating)}</div>
+                </div>
+                <div class="avaliacao-item">
+                    <span>Qualidade:</span>
+                    <div class="stars">${'★'.repeat(avaliacao.quality_rating)}${'☆'.repeat(5-avaliacao.quality_rating)}</div>
+                </div>
+            </div>
+        </div>
+        <p class="avaliacao-comentario">${avaliacao.comment}</p>
+    </div>
+`).join('');
+    } catch (error) {
+        console.error('Erro ao carregar avaliações:', error);
+        document.getElementById('avaliacoes-container').innerHTML = 
+            '<p class="error">Erro ao carregar avaliações. Tente novamente mais tarde.</p>';
+    }
+}
+function atualizarEstatisticas(avaliacoes) {
+    if (!avaliacoes.length) return;
+    
+    const total = avaliacoes.length;
+    const mediaGeral = avaliacoes.reduce((acc, curr) => acc + curr.general_rating, 0) / total;
+    const mediaPontualidade = avaliacoes.reduce((acc, curr) => acc + curr.punctuality_rating, 0) / total;
+    const mediaQualidade = avaliacoes.reduce((acc, curr) => acc + curr.quality_rating, 0) / total;
+    
+    document.getElementById('media-avaliacoes').textContent = mediaGeral.toFixed(1);
+    document.getElementById('numero-avaliacoes').textContent = `(${total} avaliações)`;
+    document.getElementById('pontualidade-stars').innerHTML = '★'.repeat(Math.round(mediaPontualidade));
+    document.getElementById('qualidade-stars').innerHTML = '★'.repeat(Math.round(mediaQualidade));
+}
+
+function abrirModalAvaliacao() {
+    document.getElementById('modalAvaliacao').style.display = 'block';
+}
+
+function fecharModalAvaliacao() {
+    const modal = document.getElementById('modalAvaliacao');
+    modal.style.display = 'none';
+    document.getElementById('formAvaliacao').reset();
+}
+
+async function enviarAvaliacao(formData) {
+    try {
+        const response = await fetch('/api/reviews', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include', // Importante para a sessão
+            body: JSON.stringify(Object.fromEntries(formData))
         });
 
-        // Preencher avaliações se houver
-        if (data.avaliacoes && data.avaliacoes.length > 0) {
-            const avaliacoesContainer = document.getElementById('avaliacoes-container');
-            avaliacoesContainer.innerHTML = ''; // Limpa avaliações existentes
+        if (response.status === 401) {
+            // Se não estiver logado, salva a URL atual e redireciona
+            localStorage.setItem('returnUrl', window.location.href);
+            alert('Por Favor Faça Login')
+            window.location.href = '/login.html';
+            return;
+        }
 
-            data.avaliacoes.forEach(avaliacao => {
-                const avaliacaoElement = document.createElement('div');
-                avaliacaoElement.className = 'avaliacao-item';
-                avaliacaoElement.innerHTML = `
-                    <div class="avaliacao-header">
-                        <span class="avaliacao-stars">${'★'.repeat(avaliacao.nota)}</span>
-                        <span class="avaliacao-data">${formatarData(avaliacao.data_avaliacao)}</span>
-                    </div>
-                    <p>${avaliacao.comentario}</p>
-                `;
-                avaliacoesContainer.appendChild(avaliacaoElement);
-            });
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.error || 'Erro ao enviar avaliação');
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Erro:', error);
+        throw error;
+    }
+}
+
+function validarFormulario(formData) {
+    const requiredFields = ['generalRating', 'punctualityRating', 'qualityRating', 'comment'];
+    
+    for (const field of requiredFields) {
+        if (!formData.get(field)) {
+            throw new Error(`Por favor, preencha todos os campos obrigatórios`);
         }
     }
 
-    // Funções auxiliares de formatação
-    function formatarTelefone(telefone) {
-        const cleaned = telefone.replace(/\D/g, '');
-        return cleaned.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    const comment = formData.get('comment');
+    if (comment.length < 10) {
+        throw new Error('O comentário deve ter pelo menos 10 caracteres');
     }
-
-    function formatarPreco(preco) {
-        return `R$ ${Number(preco).toFixed(2)}`;
+    if (comment.length > 1000) {
+        throw new Error('O comentário não pode ter mais de 1000 caracteres');
     }
+}
 
-    function formatarDiaSemana(dia) {
-        const dias = {
-            'segunda': 'Segunda-feira',
-            'terca': 'Terça-feira',
-            'quarta': 'Quarta-feira',
-            'quinta': 'Quinta-feira',
-            'sexta': 'Sexta-feira',
-            'sabado': 'Sábado',
-            'domingo': 'Domingo'
-        };
-        return dias[dia] || dia;
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    carregarDadosPrestador();
+    carregarAvaliacoes();
+    inicializarFormulario();
 
-    function formatarData(data) {
-        return new Date(data).toLocaleDateString('pt-BR');
-    }
-
-    // Event Listeners
-    document.getElementById('btn-editar').addEventListener('click', function() {
-        // Implementar lógica de edição
-         window.location.href = 'editarPerfil.html';
-    });
-
-    document.getElementById('btn-sair').addEventListener('click', function() {
-        if (confirm('Deseja realmente sair?')) {
-            // Implementar lógica de logout
-            window.location.href = '/index.html';
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalAvaliacao');
+        if (event.target === modal) {
+            fecharModalAvaliacao();
         }
-    });
-
-    // Carregar dados do perfil ao iniciar
-    carregarPerfil();
+    };
 });
+
+function inicializarFormulario() {
+    const form = document.getElementById('formAvaliacao');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        try {
+            // Pegar o ID do profissional da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const professionalId = urlParams.get('id');
+            
+            const formData = new FormData(form);
+            // Adicionar o ID do profissional no formData
+            formData.append('professionalId', professionalId);
+            
+            // Adiciona a validação aqui
+            validarFormulario(formData);
+
+            const result = await enviarAvaliacao(formData);
+            
+            if (result) {
+                fecharModalAvaliacao();
+                await carregarAvaliacoes();
+                alert('Avaliação enviada com sucesso!');
+            }
+        } catch (error) {
+            alert(error.message || 'Erro ao enviar avaliação');
+        }
+    });
+}

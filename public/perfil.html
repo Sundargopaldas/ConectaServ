@@ -7,17 +7,20 @@
     <link rel="stylesheet" href="perfil.css">
 </head>
 <body>
+    <!-- Navegação -->
     <nav>
         <a href="index.html" class="logo">ConectaServ</a>
         <div class="nav-links">
             <a href="index.html">Início</a>
-            <a href="servicos.html">Serviços</a>
+            <a href="services.html">Serviços</a>
             <a href="cadastroProfissional.html">Seja um Prestador</a>
-            <a href="login.html">Cadastre-se/Login</a>
+            
         </div>
     </nav>
 
+    <!-- Conteúdo Principal -->
     <div class="container">
+        <!-- Cabeçalho do Perfil -->
         <div class="profile-header">
             <div class="profile-info">
                 <h1 id="nome-prestador">Nome do Prestador</h1>
@@ -29,7 +32,9 @@
             </div>
         </div>
 
+        <!-- Seções do Perfil -->
         <div class="profile-content">
+            <!-- Informações de Contato -->
             <div class="profile-section">
                 <h2>Informações de Contato</h2>
                 <div class="info-grid">
@@ -44,6 +49,7 @@
                 </div>
             </div>
 
+            <!-- Informações do Serviço -->
             <div class="profile-section">
                 <h2>Sobre o Serviço</h2>
                 <div class="info-grid">
@@ -58,6 +64,7 @@
                 </div>
             </div>
 
+            <!-- Horários -->
             <div class="profile-section">
                 <h2>Horários Disponíveis</h2>
                 <div id="horarios-container" class="horarios-grid">
@@ -65,20 +72,115 @@
                 </div>
             </div>
 
+            <!-- Seção de Avaliações -->
             <div class="profile-section">
                 <h2>Avaliações</h2>
-                <div id="avaliacoes-container">
+                <!-- Resumo das Avaliações -->
+                <div class="rating-summary">
+                    <div class="rating-average">
+                        <span class="rating-number" id="media-avaliacoes">0.0</span>
+                        <div class="stars">★★★★★</div>
+                        <span class="total-reviews" id="numero-avaliacoes">(0 avaliações)</span>
+                    </div>
+                    <div class="rating-breakdown">
+                        <div class="rating-type">
+                            <span>Qualidade</span>
+                            <div class="stars" id="qualidade-stars">★★★★★</div>
+                        </div>
+                        <div class="rating-type">
+                            <span>Pontualidade</span>
+                            <div class="stars" id="pontualidade-stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-avaliar" onclick="abrirModalAvaliacao()">Avaliar Profissional</button>
+
+                <!-- Lista de Avaliações -->
+                <div id="avaliacoes-container" class="avaliacoes-lista">
                     <!-- Avaliações serão inseridas aqui via JavaScript -->
-                    <p class="no-reviews">Ainda não há avaliações.</p>
                 </div>
             </div>
         </div>
-
-        <div class="profile-actions">
-        <button id="btn-editar" class="btn-primary" onclick="window.location.href='editarPerfil.html'">Editar Perfil</button>
-        <button id="btn-sair" class="btn-secondary">Sair</button>
-        </div>
     </div>
+
+    <!-- Modal de Avaliação -->
+    <div id="modalAvaliacao" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="fecharModalAvaliacao()">&times;</span>
+        <h2>Avaliar Profissional</h2>
+        
+        <form id="formAvaliacao">
+            <!-- Avaliação Geral -->
+            <div class="rating-group">
+                <label>Avaliação Geral</label>
+                <div class="stars-input">
+                    <input type="radio" name="generalRating" value="5" id="star5">
+                    <label for="star5">★</label>
+                    <input type="radio" name="generalRating" value="4" id="star4">
+                    <label for="star4">★</label>
+                    <input type="radio" name="generalRating" value="3" id="star3">
+                    <label for="star3">★</label>
+                    <input type="radio" name="generalRating" value="2" id="star2">
+                    <label for="star2">★</label>
+                    <input type="radio" name="generalRating" value="1" id="star1" checked>
+                    <label for="star1">★</label>
+                </div>
+            </div>
+
+            <!-- Pontualidade -->
+            <div class="rating-group">
+                <label>Pontualidade</label>
+                <div class="stars-input">
+                    <input type="radio" name="punctualityRating" value="5" id="punct5">
+                    <label for="punct5">★</label>
+                    <input type="radio" name="punctualityRating" value="4" id="punct4">
+                    <label for="punct4">★</label>
+                    <input type="radio" name="punctualityRating" value="3" id="punct3">
+                    <label for="punct3">★</label>
+                    <input type="radio" name="punctualityRating" value="2" id="punct2">
+                    <label for="punct2">★</label>
+                    <input type="radio" name="punctualityRating" value="1" id="punct1" checked>
+                    <label for="punct1">★</label>
+                </div>
+            </div>
+
+            <!-- Qualidade -->
+            <div class="rating-group">
+                <label>Qualidade</label>
+                <div class="stars-input">
+                    <input type="radio" name="qualityRating" value="5" id="qual5">
+                    <label for="qual5">★</label>
+                    <input type="radio" name="qualityRating" value="4" id="qual4">
+                    <label for="qual4">★</label>
+                    <input type="radio" name="qualityRating" value="3" id="qual3">
+                    <label for="qual3">★</label>
+                    <input type="radio" name="qualityRating" value="2" id="qual2">
+                    <label for="qual2">★</label>
+                    <input type="radio" name="qualityRating" value="1" id="qual1" checked>
+                    <label for="qual1">★</label>
+                </div>
+            </div>
+
+            <!-- Comentário e Fotos -->
+            <div class="comment-group">
+                <label for="comentario">Seu Comentário</label>
+                <textarea id="comentario" name="comment" required minlength="10" maxlength="1000"></textarea>
+            </div>
+
+            <div class="photo-upload">
+                <label for="fotos">Adicionar Fotos (opcional)</label>
+                <input type="file" id="fotos" name="photos" multiple accept="image/*">
+            </div>
+
+            <!-- Botões -->
+            <div class="modal-buttons">
+                <button type="submit" class="btn-submit">Enviar Avaliação</button>
+                <button type="button" class="btn-cancel" onclick="fecharModalAvaliacao()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
 
     <script src="js/perfil.js"></script>
 </body>

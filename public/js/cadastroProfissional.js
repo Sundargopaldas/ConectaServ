@@ -1,4 +1,25 @@
-document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', async function() {
+    // Carregar categorias do banco de dados
+    try {
+        const response = await fetch('http://localhost:3001/api/categorias');
+        const categorias = await response.json();
+        const categoriaSelect = document.getElementById('categoria');
+        
+        // Limpar opções existentes
+        categoriaSelect.innerHTML = '<option value="">Selecione a categoria</option>';
+        
+        // Adicionar novas opções baseadas no banco
+        categorias.forEach(categoria => {
+            const option = document.createElement('option');
+            option.value = categoria.id;
+            option.textContent = categoria.nome;
+            categoriaSelect.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+    }
+
     // Máscara para CPF
     const cpfInput = document.getElementById('cpf');
     cpfInput.addEventListener('input', function(e) {
@@ -8,6 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
             e.target.value = value;
         }
     });
+
+    // Resto do código...
+    // (Todo o código do segundo DOMContentLoaded deve vir aqui)
 
     // Adicionar novo horário
     document.querySelector('.btn-adicionar-horario').addEventListener('click', function() {

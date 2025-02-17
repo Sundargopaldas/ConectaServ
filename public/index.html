@@ -26,26 +26,141 @@
         </section>
 
         <section class="services">
-            <h2>Serviços Populares</h2>
+            <h2 class="section-title">Serviços Populares</h2>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card" data-prestador-id="1">
                     <h3>Eletricistas</h3>
                     <p>Profissionais qualificados para sua segurança</p>
+                    <button class="chat-btn">Chat com Profissional</button>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-prestador-id="2">
                     <h3>Encanadores</h3>
                     <p>Resolva problemas hidráulicos com expertise</p>
+                    <button class="chat-btn">Chat com Profissional</button>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-prestador-id="3">
                     <h3>Pintores</h3>
                     <p>Renove os ambientes da sua casa</p>
+                    <button class="chat-btn">Chat com Profissional</button>
                 </div>
-                <div class="service-card">
-                    <h3>Diaristas</h3>
-                    <p>Limpeza e organização profissional</p>
-                </div>
+                <div class="service-card" data-prestador-id="4">
+                 <h3>Faxineiros</h3>
+                 <p>Limpeza e organização profissional</p>
+                 <button class="chat-btn">Chat com Profissional</button>
+</div>
             </div>
         </section>
     </main>
+
+    <div id="chat" class="chat-modal">
+    <div class="chat-messages-container">
+        <div class="chat-header">
+            <h3>Chat</h3>
+            <button class="close-btn">&times;</button>
+        </div>
+        <div class="chat-messages"></div>
+        <div class="typing-status" style="height: 20px; font-size: 12px; color: #666; font-style: italic; margin: 5px 0;"></div>
+        <div class="chat-input">
+            <input type="text" placeholder="Mensagem..." id="mensagemInput">
+            <button id="enviarMensagemBtn">↑</button>
+        </div>
+    </div>
+</div>
+
+    <template id="mensagem-template">
+        <div class="mensagem">
+            <div class="mensagem-conteudo"></div>
+            <span class="mensagem-hora"></span>
+            <span class="status-leitura"></span>
+        </div>
+    </template>
+<script type="module">
+   import Chat from './js/chat.js';
+   
+   document.addEventListener('DOMContentLoaded', () => {
+       const chat = new Chat('cliente', '1');
+       console.log('Chat instance:', chat);
+       const messageInput = document.getElementById('mensagemInput');
+       const sendButton = document.getElementById('enviarMensagemBtn');
+
+       messageInput.addEventListener('input', () => {
+           chat.handleTyping();
+       });
+
+       document.querySelectorAll('.chat-btn').forEach(btn => {
+           btn.addEventListener('click', async (e) => {
+               const card = e.target.closest('.service-card');
+               const categoria = card.querySelector('h3').textContent;
+               
+               try {
+                   const response = await fetch(`/api/profissionais/${categoria}`);
+                   const profissionais = await response.json();
+                   
+                   if (profissionais.length > 0) {
+                       const profissionaisList = document.createElement('div');
+                       profissionaisList.className = 'profissionais-list';
+                       
+                       profissionais.forEach(prof => {
+                           const profItem = document.createElement('div');
+                           profItem.className = 'profissional-item';
+                           profItem.innerHTML = `
+                               <div class="prof-info">
+                                   <span class="prof-nome">${prof.nome}</span>
+                               </div>
+                               <button class="iniciar-chat" data-id="${prof.id}" data-nome="${prof.nome}">
+                                   Iniciar Chat
+                               </button>
+                           `;
+                           profissionaisList.appendChild(profItem);
+                       });
+
+                       const modalContent = document.querySelector('.chat-messages');
+                       modalContent.innerHTML = '';
+                       modalContent.appendChild(profissionaisList);
+                       document.querySelector('.chat-modal').classList.add('active');
+                       
+                       document.querySelectorAll('.iniciar-chat').forEach(btn => {
+                           btn.addEventListener('click', (e) => {
+                               const profId = e.target.dataset.id;
+                               const profNome = e.target.dataset.nome;
+                               chat.iniciarChat(profId, profNome);
+                               modalContent.innerHTML = '';
+                           });
+                       });
+                   } else {
+                       alert('Nenhum profissional disponível no momento.');
+                   }
+               } catch (error) {
+                   console.error('Erro:', error);
+               }
+           });
+       });
+
+       document.querySelector('.close-btn').addEventListener('click', () => {
+           document.querySelector('.chat-modal').classList.remove('active');
+           document.querySelector('.chat-messages').innerHTML = '';
+       });
+
+       const sendMessage = () => {
+    const content = messageInput.value.trim();
+    if (content && chat.destinatarioAtual) { // Adicione esta verificação
+        chat.enviarMensagem({
+            conteudo: content,
+            remetenteId: chat.userId,
+            destinatarioId: chat.destinatarioAtual,
+            tipo: 'mensagem'
+        });
+        messageInput.value = '';
+    } else if (!chat.destinatarioAtual) {
+        alert('Selecione um profissional primeiro');
+    }
+};
+
+       sendButton.addEventListener('click', sendMessage);
+       messageInput.addEventListener('keypress', (e) => {
+           if (e.key === 'Enter') sendMessage();
+       });
+   });
+</script>
 </body>
 </html>

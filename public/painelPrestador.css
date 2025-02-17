@@ -1,0 +1,290 @@
+/* painelPrestador.css */
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.solicitacoes {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.solicitacoes h2 {
+    color: #1a73e8;
+    margin-bottom: 20px;
+}
+
+.solicitacao-card {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-left: 4px solid #1a73e8;
+}
+
+.solicitacao-card h3 {
+    color: #202124;
+    margin-bottom: 10px;
+}
+
+.solicitacao-card p {
+    color: #5f6368;
+    margin: 5px 0;
+}
+
+.acoes {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.acoes button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.acoes button:first-child {
+    background: #1a73e8;
+    color: white;
+}
+
+.acoes button:last-child {
+    background: #fff;
+    border: 1px solid #dadce0;
+    color: #5f6368;
+}
+
+.chat-container {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: calc(100vh - 100px);
+}
+
+.conversas-list {
+    padding: 15px;
+    border-bottom: 1px solid #dadce0;
+}
+
+.chat-messages {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.mensagem {
+    max-width: 70%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.mensagem.enviada {
+    background: #1a73e8;
+    color: white;
+    margin-left: auto;
+}
+
+.mensagem.recebida {
+    background: #f1f3f4;
+    color: #202124;
+}
+
+.chat-input {
+    display: flex;
+    padding: 15px;
+    gap: 10px;
+    border-top: 1px solid #dadce0;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    outline: none;
+}
+
+.chat-input button {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 0 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* painelCliente.css */
+.dashboard {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.servicos-solicitados {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.servicos-solicitados h2 {
+    color: #1a73e8;
+    margin-bottom: 20px;
+}
+
+.servico-card {
+    background: #f8f9fa;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #1a73e8;
+}
+
+.servico-card h3 {
+    color: #202124;
+    margin-bottom: 10px;
+}
+
+.servico-card p {
+    color: #5f6368;
+    margin: 5px 0;
+}
+
+.servico-card button {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status-pendente {
+    background: #fce8e6;
+    color: #d93025;
+}
+
+.status-aceito {
+    background: #e6f4ea;
+    color: #137333;
+}
+
+.status-concluido {
+    background: #e8f0fe;
+    color: #1a73e8;
+}
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 10px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.mensagem {
+    max-width: 70%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.mensagem.enviada {
+    background: #1a73e8;
+    color: white;
+    margin-left: auto;
+}
+
+.mensagem.recebida {
+    background: #f1f3f4;
+    color: #202124;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    gap: 10px;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.enviar-btn {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#status-conexao {
+    font-size: 14px;
+    color: #28a745;
+}
+.typing-status {
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+    padding: 5px 15px;
+    height: 20px;
+}
+
+.status-leitura {
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    color: #6c757d;
+}
+
+.mensagem.lida .status-leitura {
+    color: #1a73e8;
+}
+
+.mensagem {
+    position: relative;
+    padding-bottom: 20px; /* Para acomodar o status de leitura */
+}

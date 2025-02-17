@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Prestador - ConectaServ</title>
+    <link rel="stylesheet" href="painelPrestador.css">
+</head>
+<body>
+    <header class="main-header">
+        <nav class="nav-container">
+            <a href="index.html" class="logo">ConectaServ</a>
+            <div class="nav-links">
+                <a href="services.html">Serviços</a>
+                <a href="painelPrestador.html" class="active">Meu Painel</a>
+                <div class="user-menu">
+                    <span class="user-name">Olá, <span id="prestadorNome">Prestador</span></span>
+                    <button class="logout-btn" onclick="logout()">Sair</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="dashboard-container">
+        <aside class="sidebar">
+            <nav class="menu-lateral">
+                <a href="#solicitacoes" class="menu-item active">
+                    <i class="icon-solicitacoes"></i>
+                    Solicitações
+                </a>
+                <a href="#mensagens" class="menu-item">
+                    <i class="icon-mensagens"></i>
+                    Mensagens
+                </a>
+                <a href="#agenda" class="menu-item">
+                    <i class="icon-agenda"></i>
+                    Agenda
+                </a>
+                <a href="#perfil" class="menu-item">
+                    <i class="icon-perfil"></i>
+                    Meu Perfil
+                </a>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <section class="dashboard">
+                <div class="solicitacoes">
+                    <div class="section-header">
+                        <h2>Solicitações de Serviço</h2>
+                        <div class="filtros">
+                            <button class="filter-btn active" data-filter="todas">Todas</button>
+                            <button class="filter-btn" data-filter="pendentes">Pendentes</button>
+                            <button class="filter-btn" data-filter="aceitas">Aceitas</button>
+                            <button class="filter-btn" data-filter="concluidas">Concluídas</button>
+                        </div>
+                    </div>
+
+                    <div class="solicitacoes-list">
+                        <!-- As solicitações serão inseridas aqui via JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="chat-section">
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <h3>Mensagens</h3>
+                            <span class="online-status">Online</span>
+                        </div>
+
+                        <div class="conversas-container">
+                            <div class="conversas-list">
+                                <!-- Lista de conversas será inserida aqui via JavaScript -->
+                            </div>
+
+                            <div class="chat-messages-container">
+                                <div class="chat-messages">
+                                    <!-- Mensagens serão inseridas aqui via JavaScript -->
+                                </div>
+                                <div class="typing-status"></div>
+                                <div class="chat-input">
+                                    <input type="text" placeholder="Digite sua mensagem..." id="mensagemInput">
+                                    <button class="enviar-btn" id="enviarMensagemBtn">
+                                        <i class="icon-enviar"></i>
+                                        Enviar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Template para card de solicitação -->
+    <template id="solicitacao-template">
+        <div class="solicitacao-card">
+            <div class="card-header">
+                <h3 class="cliente-nome"></h3>
+                <span class="status-badge"></span>
+            </div>
+            <div class="card-body">
+                <p class="servico-descricao"></p>
+                <p class="data-solicitacao"></p>
+                <p class="endereco-servico"></p>
+            </div>
+            <div class="card-footer">
+                <div class="acoes">
+                    <button class="aceitar-btn">Aceitar</button>
+                    <button class="rejeitar-btn">Rejeitar</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Template para conversa -->
+    <template id="conversa-template">
+        <div class="conversa-item">
+            <div class="conversa-avatar"></div>
+            <div class="conversa-info">
+                <h4 class="cliente-nome"></h4>
+                <p class="ultima-mensagem"></p>
+            </div>
+            <span class="tempo-mensagem"></span>
+        </div>
+    </template>
+
+    <!-- Template para mensagem -->
+    <template id="mensagem-template">
+        <div class="mensagem">
+            <div class="mensagem-conteudo"></div>
+            <span class="mensagem-hora"></span>
+            <span class="status-leitura"></span>
+        </div>
+    </template>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>&copy; 2024 ConectaServ. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="js/painelPrestador.js"></script>
+</body>
+</html>
