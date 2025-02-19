@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Serviço</title>
+    <link rel="stylesheet" href="agendamento.css">
+</head>
+<body>
+    <!-- Navegação -->
+    <nav>
+        <a href="index.html" class="logo">ConectaServ</a>
+        <div class="nav-links">
+            <a href="index.html">Início</a>
+            <a href="services.html">Serviços</a>
+            <a href="cadastroProfissional.html">Seja um Prestador</a>
+            <a href="ranking.html">Ranking de Profissionais</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="header">
+            <h1>Agendamento de Serviço</h1>
+            <div id="prestador-info" class="prestador-info">
+                <!-- Info do prestador será inserida via JavaScript -->
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="calendario-container">
+                <div class="calendario-header">
+                    <button id="prev-month">&lt;</button>
+                    <h2 id="current-month">Mês Ano</h2>
+                    <button id="next-month">&gt;</button>
+                </div>
+                <div id="calendario" class="calendario">
+                    <div class="dias-semana">
+                        <div>Dom</div>
+                        <div>Seg</div>
+                        <div>Ter</div>
+                        <div>Qua</div>
+                        <div>Qui</div>
+                        <div>Sex</div>
+                        <div>Sáb</div>
+                    </div>
+                    <div id="dias-grid" class="dias-grid">
+                        <!-- Dias serão inseridos via JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="horarios-container" class="horarios-container">
+                <h3>Horários Disponíveis</h3>
+                <div id="horarios-grid" class="horarios-grid">
+                    <!-- Horários serão inseridos via JavaScript -->
+                </div>
+            </div>
+
+            <div id="form-agendamento" class="form-agendamento hidden">
+    <h3>Confirmar Agendamento</h3>
+    <div id="resumo-agendamento" class="resumo-agendamento"></div>
+    <form id="agendamento-form">
+        <div class="form-group">
+            <label for="observacoes">Observações sobre o serviço:</label>
+            <textarea id="observacoes" name="observacoes" rows="4" required 
+                      placeholder="Descreva o serviço que precisa ser realizado"></textarea>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">Confirmar Agendamento</button>
+            <button type="button" class="btn-secondary" onclick="cancelarAgendamento()">Cancelar</button>
+        </div>
+    </form>
+</div>
+        </main>
+    </div>
+    <script src="js/agendamento.js"></script>
+</body>
+</html>

@@ -4,13 +4,18 @@ const express = require('express');
 const WebSocket = require('ws');
 const cors = require('cors');
 const session = require('express-session');
+const rankingRoutes = require('./routes/rankingRoutes');
+const agendamentoRoutes = require('./routes/agendamentoRoutes');
+
+const app = express();
 
 const profissionaisRoutes = require('./routes/profissionais');
 const perfilController = require('./routes/perfilController');
 const servicosController = require('./routes/servicosController');
 const reviewsRoutes = require('./routes/reviewsRoutes');
 const authController = require('./controllers/authController');
-const app = express();
+const agendamentosPrestadorRoutes = require('./routes/agendamentosPrestadorRoutes');
+
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
@@ -49,7 +54,11 @@ app.use('/api/profissionais', profissionaisRoutes);
 app.use('/api/perfil', perfilController);
 app.use('/api/servicos', servicosController);
 app.use('/api/reviews', reviewsRoutes);
+app.use('/api/ranking', rankingRoutes);
 app.post('/api/auth/login', authController.login);
+app.use('/api/agendamento', agendamentoRoutes);
+app.use('/api/agendamentos', agendamentosPrestadorRoutes);
+
 
 
 const server = require('http').createServer(app);
@@ -179,7 +188,24 @@ app.get('/api/categorias', async (req, res) => {
         res.status(500).json({error: 'Erro ao buscar categorias'});
     }
 });
-// No server.js
+
+
+app.get('/api/horarios_disponiveis/:prestadorId', async (req, res) => {
+    try {
+
+        console.log('Buscando horários para prestador ID:', req.params.prestadorId);
+        const [horarios] = await connection.query(
+            'SELECT * FROM horarios_disponiveis WHERE prestador_id = ? AND disponivel = 1',
+            [req.params.prestadorId]
+        );
+
+        console.log('Horários encontrados:', horarios);
+        res.json(horarios);
+    } catch (error) {
+        console.error('Erro ao buscar horários:', error);
+        res.status(500).json({ error: 'Erro ao buscar horários' });
+    }
+});
 app.get('/api/profissionais/:categoria', async (req, res) => {
     try {
         // Mapeamento das categorias do HTML para o banco

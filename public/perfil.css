@@ -368,6 +368,21 @@ nav {
 .btn-primeira-avaliacao:hover {
     background-color: #0b5ed7;
 }
+.btn-agendar {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.btn-agendar:hover {
+    background-color: #1976d2;
+}
 
 /* Responsividade */
 @media (max-width: 1024px) {

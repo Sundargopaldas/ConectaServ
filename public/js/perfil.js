@@ -192,6 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 });
+function agendar() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const prestadorId = urlParams.get('id');
+    window.location.href = `agendamento.html?id=${prestadorId}`;
+}npm
 
 function inicializarFormulario() {
     const form = document.getElementById('formAvaliacao');

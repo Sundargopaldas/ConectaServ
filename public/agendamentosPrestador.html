@@ -1,0 +1,59 @@
+// agendamentosPrestador.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Prestador</title>
+    <link rel="stylesheet" href="agendamentosPrestador.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Painel do Prestador</h1>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-button active" data-tab="pendentes">Pendentes</button>
+            <button class="tab-button" data-tab="confirmados">Confirmados</button>
+            <button class="tab-button" data-tab="historico">Histórico</button>
+        </div>
+
+        <div class="tab-content active" id="pendentes">
+            <div class="agendamentos-lista" id="lista-pendentes">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="confirmados">
+            <div class="agendamentos-lista" id="lista-confirmados">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="historico">
+            <div class="agendamentos-lista" id="lista-historico">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <template id="agendamento-template">
+        <div class="card-agendamento">
+            <div class="info-cliente">
+                <h3 class="nome-cliente"></h3>
+                <p class="servico"></p>
+                <div class="data-hora">
+                    <span class="data"></span>
+                    <span class="hora"></span>
+                </div>
+            </div>
+            <div class="acoes">
+                <!-- Botões de ação serão adicionados via JS quando necessário -->
+            </div>
+        </div>
+    </template>
+
+    <script src="js/agendamentosPrestador.js"></script>
+</body>
+</html>
